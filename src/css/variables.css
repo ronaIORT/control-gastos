@@ -1,0 +1,248 @@
+/* ===== Variables de diseño y estilos base ===== */
+
+:root {
+    /* Colores del tema */
+    --bg: #e8e0f0;
+    --card: #f5f0fa;
+    --accent: #7c3aed;
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --text: #2d1b4e;
+    --text-light: #7c6a9a;
+    --border: #d4c4e8;
+    /* Sombras */
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Radios de borde */
+    --radius: 12px;
+    --radius-sm: 8px;
+    /* Transiciones */
+    --transition: 0.2s ease;
+    /* Layout */
+    --sidebar-w: 240px;
+    --bottom-nav-h: 60px;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    line-height: 1.5;
+}
+
+#app {
+    flex: 1;
+    width: 100%;
+    display: flex;
+}
+
+/* ===== Sidebar de navegación lateral ===== */
+.sidebar {
+    width: var(--sidebar-w);
+    background: #2d1b4e;
+    color: #d4c4e8;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transition: transform var(--transition);
+    overflow-y: auto;
+}
+
+.sidebar .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 0 1.5rem 1.5rem;
+    color: #f5f0fa;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sidebar .logo span {
+    font-size: 1.8rem;
+}
+
+.sidebar nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0 0.75rem;
+}
+
+.sidebar nav button {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-size: 0.95rem;
+    color: #b09bc8;
+}
+
+.sidebar nav button:hover {
+    background: #4a2d7a;
+    color: #f5f0fa;
+}
+
+.sidebar nav button.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+}
+
+.sidebar nav button .ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.sidebar nav button .ico svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===== Contenido principal ===== */
+.main {
+    flex: 1;
+    margin-left: var(--sidebar-w);
+    padding: 1.5rem 2rem 5rem;
+    min-height: 100vh;
+    width: calc(100% - var(--sidebar-w));
+    transition: margin var(--transition);
+}
+
+/* ===== Secciones (cada vista de la app) ===== */
+.section {
+    display: none;
+    animation: fadeSlideIn 0.35s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Navegación inferior para móviles ===== */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2d1b4e;
+    border-top: 1px solid #4a2d7a;
+    z-index: 200;
+    height: var(--bottom-nav-h);
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.bottom-nav button {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    cursor: pointer;
+    font-size: 0.7rem;
+    color: #b09bc8;
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    transition: all var(--transition);
+    min-width: 3rem;
+}
+
+.bottom-nav button .ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.3rem;
+}
+
+.bottom-nav button .ico svg {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom-nav button.active {
+    color: #f5f0fa;
+    font-weight: 600;
+}
+
+/* ===== Overlay para móviles ===== */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 99;
+}
+
+.overlay.show {
+    display: block;
+}
+
+/* ===== Utilidades de color y espaciado ===== */
+.text-green {
+    color: var(--green);
+}
+
+.text-red {
+    color: var(--red);
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+
+.gap-1 {
+    gap: 0.5rem;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

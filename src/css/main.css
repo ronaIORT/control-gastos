@@ -1,0 +1,7 @@
+/* Hoja de estilos principal: importa todos los módulos */
+@import './variables.css';
+@import './components/dashboard.css';
+@import './components/forms.css';
+@import './components/table.css';
+@import './components/modal.css';
+@import './responsive.css';

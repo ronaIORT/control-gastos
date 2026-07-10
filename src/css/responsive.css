@@ -1,0 +1,154 @@
+/* ===== Ajustes para tablet y móvil (<= 768px) ===== */
+@media (max-width: 768px) {
+    /* Sidebar oculto por defecto, se abre con clase .open */
+    .sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    /* Contenido principal ocupa todo el ancho */
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem 1rem 5rem;
+    }
+
+    /* Grid de tarjetas a 2 columnas */
+    .cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .card .card-value {
+        font-size: 1.3rem;
+    }
+
+    /* Grid de charts a 1 columna */
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Navegación inferior visible */
+    .bottom-nav {
+        display: flex;
+    }
+
+    /* Formularios en vertical */
+    .form-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group {
+        width: 100%;
+        min-width: 100px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+    }
+
+    /* Filtros en vertical */
+    .filters-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters-row input,
+    .filters-row select {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Cards de formulario más compactas */
+    .form-card {
+        padding: 1.25rem;
+    }
+
+    /* Input de añadir fondos en metas ocupa todo el ancho */
+    .goal-add-input {
+        width: 100% !important;
+    }
+
+    .chart-card canvas {
+        max-width: 100%;
+    }
+
+    /* Sidebar abierto sobrepone al bottom-nav */
+    .sidebar.open {
+        z-index: 300;
+    }
+
+}
+
+/* ===== Ajustes para móviles pequeños (<= 480px) ===== */
+@media (max-width: 480px) {
+    /* Grid de tarjetas a 1 columna */
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card .card-value {
+        font-size: 1.1rem;
+    }
+
+    .card {
+        padding: 0.75rem;
+    }
+
+    /* Cards de formulario más compactas */
+    .form-card {
+        padding: 1rem;
+    }
+
+    /* Botones más pequeños */
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-sm {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+    }
+
+    /* Navegación inferior más compacta */
+    .bottom-nav button {
+        font-size: 0.6rem;
+        min-width: 2.5rem;
+        padding: 0.3rem 0.3rem;
+    }
+
+    /* Tabla más compacta */
+    table {
+        font-size: 0.75rem;
+    }
+
+    table th,
+    table td {
+        padding: 0.4rem 0.4rem;
+    }
+
+    /* Charts más compactos */
+    .chart-card {
+        padding: 0.75rem;
+    }
+
+    .chart-card h3 {
+        font-size: 0.85rem;
+    }
+
+    .chart-card canvas {
+        max-height: 200px;
+    }
+}

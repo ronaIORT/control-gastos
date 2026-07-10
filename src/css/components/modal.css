@@ -1,0 +1,89 @@
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.confirm-overlay.open {
+  opacity: 1;
+}
+
+.confirm-dialog {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 400px;
+  animation: fadeSlideIn 0.25s ease;
+  overflow: hidden;
+}
+
+.confirm-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1.25rem 0;
+}
+
+.confirm-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--yellow);
+  flex-shrink: 0;
+}
+
+.confirm-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.confirm-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  flex: 1;
+}
+
+.confirm-close {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--text-light);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.confirm-close:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.confirm-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.confirm-body {
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.confirm-footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding: 0 1.25rem 1.25rem;
+}

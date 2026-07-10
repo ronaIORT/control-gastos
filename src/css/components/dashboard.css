@@ -1,0 +1,147 @@
+/* ===== Grid de tarjetas resumen ===== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Tarjeta individual */
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    border: 1px solid transparent;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: #d4c4e8;
+}
+
+.card .card-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.card .card-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+/* Variantes de tarjeta con borde izquierdo de color */
+.card.accent {
+    border-left: 4px solid var(--accent);
+}
+
+.card.green {
+    border-left: 4px solid var(--green);
+}
+
+.card.red {
+    border-left: 4px solid var(--red);
+}
+
+.card.yellow {
+    border-left: 4px solid var(--yellow);
+}
+
+/* ===== Banners de alerta (presupuestos) ===== */
+.alert-banner {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeSlideIn 0.4s ease;
+}
+
+.alert-warning {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+
+.alert-danger {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* ===== Barras de progreso ===== */
+.progress-wrap {
+    margin: 0.5rem 0;
+}
+
+.progress-wrap .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #d4c4e8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.progress-fill.safe {
+    background: var(--green);
+}
+
+.progress-fill.warning {
+    background: var(--yellow);
+}
+
+.progress-fill.danger {
+    background: var(--red);
+}
+
+/* ===== Grid de gráficos ===== */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+}
+
+.chart-card h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.chart-card canvas {
+    max-height: 280px;
+    max-width: 100%;
+}
+
+/* Ocupa todo el ancho del grid */
+.chart-full {
+    grid-column: 1 / -1;
+}
