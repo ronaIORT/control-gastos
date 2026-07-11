@@ -48,6 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar datos desde localStorage o generar datos de muestra
     initState();
 
+    // Registrar service worker y detectar actualizaciones
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js').then(reg => {
+            reg.addEventListener('updatefound', () => {
+                const nuevoSW = reg.installing;
+                nuevoSW.addEventListener('statechange', () => {
+                    if (nuevoSW.state === 'installed' && navigator.serviceWorker.controller) {
+                        mostrarActualizacionDisponible();
+                    }
+                });
+            });
+        });
+    }
+
     const mainContent = document.getElementById('mainContent');
 
     // Vincular eventos globales (navegación, sidebar, etc.)
@@ -64,3 +78,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function mostrarActualizacionDisponible() {
+    const existing = document.querySelector('.update-banner');
+    if (existing) return;
+
+    const banner = document.createElement('div');
+    banner.className = 'update-banner';
+    banner.innerHTML = `
+        <span>Nueva versi&oacute;n disponible</span>
+        <div>
+            <button class="reload-btn">Actualizar ahora</button>
+            <button class="close-btn">&times;</button>
+        </div>
+    `;
+
+    banner.querySelector('.reload-btn').addEventListener('click', () => {
+        location.reload();
+    });
+
+    banner.querySelector('.close-btn').addEventListener('click', () => {
+        banner.remove();
+    });
+
+    document.body.prepend(banner);
+}
