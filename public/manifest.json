@@ -2,7 +2,7 @@
   "name": "Control de Gastos",
   "short_name": "Gastos",
   "description": "Control de gastos personales - aplicación web offline",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#e8e0f0",
   "theme_color": "#7c3aed",

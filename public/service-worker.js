@@ -4,7 +4,7 @@ const BASE = self.location.pathname.replace(/\/service-worker\.js$/, '')
 
 const PRECACHE = [
   BASE + '/',
-  BASE + '/favicon.svg',
+  BASE + '/icon-192.png',
   BASE + '/manifest.json',
 ]
 
