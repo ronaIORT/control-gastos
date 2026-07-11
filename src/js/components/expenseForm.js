@@ -6,7 +6,7 @@ import { notify } from '../utils/notification.js';
 
 export function render(container) {
     const { categories } = getState();
-    const catOptions = categories.map(c => `<option value="${c.name}">${c.emoji} ${c.name}</option>`).join('');
+    const catOptions = categories.filter(c => c.tipo === 'gasto').map(c => `<option value="${c.name}">${c.emoji} ${c.name}</option>`).join('');
 
     container.innerHTML = `
         <div class="form-card">

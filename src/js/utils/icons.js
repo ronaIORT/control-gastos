@@ -28,4 +28,6 @@ export const ICONS = {
   chevronRight: s('<polyline points="9 18 15 12 9 6"/>'),
   save: s('<path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>'),
   box: s('<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>'),
+  categories: s('<path d="M9 5H2v7l6.29 6.29a1 1 0 001.41 0l5.58-5.58a1 1 0 000-1.41L9 5z"/><line x1="6" y1="9" x2="6.01" y2="9"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="20" y1="16" x2="22" y2="16"/><line x1="20" y1="20" x2="22" y2="20"/><line x1="16" y1="22" x2="16" y2="18"/>'),
+  lock: s('<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>'),
 };

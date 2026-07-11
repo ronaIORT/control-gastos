@@ -7,6 +7,7 @@ import { render as renderGoalList } from './components/goalList.js';
 import { render as renderTransactionTable } from './components/transactionTable.js';
 import { render as renderReports } from './components/reports.js';
 import { render as renderConfiguracion } from './components/configuracion.js';
+import { render as renderCategorias } from './components/categorias.js';
 import { render as renderAcercade } from './components/acercade.js';
 import { getState } from './state.js';
 import { setDefaultDates } from './utils/dateHelpers.js';
@@ -22,6 +23,7 @@ const routes = {
     history: renderTransactionTable,
     reports: renderReports,
     configuracion: renderConfiguracion,
+    categorias: renderCategorias,
     acercade: renderAcercade
 };
 

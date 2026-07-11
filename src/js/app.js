@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button data-section="goals"><span class="ico">${ICONS.goals}</span> Metas</button>
                 <button data-section="history"><span class="ico">${ICONS.history}</span> Historial</button>
                 <button data-section="reports"><span class="ico">${ICONS.reports}</span> Reportes</button>
+                <button data-section="categorias"><span class="ico">${ICONS.categories}</span> Categorías</button>
                 <button data-section="configuracion"><span class="ico">${ICONS.settings}</span> Configuración</button>
                 <button data-section="acercade"><span class="ico">${ICONS.info}</span> Acerca de</button>
             </nav>

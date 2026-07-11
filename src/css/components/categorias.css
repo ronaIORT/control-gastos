@@ -1,0 +1,63 @@
+.cat-form .form-row {
+    align-items: flex-end;
+}
+
+.cat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.cat-item:last-child {
+    border-bottom: none;
+}
+
+.cat-item-emoji {
+    font-size: 1.4rem;
+    width: 2rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.cat-item-name {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.cat-item-actions {
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.cat-lock {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-light);
+    opacity: 0.5;
+    font-size: 0.85rem;
+    padding: 0.25rem;
+}
+
+.cat-lock svg {
+    width: 16px;
+    height: 16px;
+}
+
+.cat-item-actions .btn {
+    min-width: 32px;
+    justify-content: center;
+    padding: 0.3rem 0.5rem;
+}
+
+.cat-item-actions .btn-danger {
+    border-width: 1.5px;
+}
+
+.cat-item-actions .btn-outline {
+    border-width: 1.5px;
+}

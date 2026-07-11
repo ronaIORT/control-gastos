@@ -176,6 +176,33 @@ export function deleteGoal(id) {
     notify();
 }
 
+// --- CRUD de categorías ---
+export function addCategory(cat) {
+    state.categories.push({ ...cat, deletable: true, editable: true });
+    saveCategories(state.categories);
+    notify();
+}
+
+export function updateCategory(oldName, newData) {
+    const idx = state.categories.findIndex(c => c.name === oldName);
+    if (idx === -1) return false;
+    if (!state.categories[idx].editable) return false;
+    state.categories[idx] = { ...state.categories[idx], ...newData };
+    saveCategories(state.categories);
+    notify();
+    return true;
+}
+
+export function deleteCategory(name) {
+    const idx = state.categories.findIndex(c => c.name === name);
+    if (idx === -1) return false;
+    if (!state.categories[idx].deletable) return false;
+    state.categories.splice(idx, 1);
+    saveCategories(state.categories);
+    notify();
+    return true;
+}
+
 // Calcula cuánto ahorrar por mes para alcanzar una meta antes de la fecha límite
 export function calcularSugerencia(goal) {
     const hoy = new Date();

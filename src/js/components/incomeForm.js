@@ -15,10 +15,7 @@ export function render(container) {
                     <div class="form-group"><label>Monto (Bs) *</label><input type="number" id="incMonto" placeholder="0.00" step="0.01" min="0.01" required></div>
                     <div class="form-group"><label>Fuente *</label><select id="incFuente" required>
                         <option value="">Seleccionar</option>
-                        <option value="Salario">Salario</option>
-                        <option value="Negocio">Negocio</option>
-                        <option value="Regalo">Regalo</option>
-                        <option value="Otros">Otros</option>
+                        ${categories.filter(c => c.tipo === 'ingreso').map(c => `<option value="${c.name}">${c.emoji} ${c.name}</option>`).join('')}
                     </select></div>
                 </div>
                 <div class="form-row">

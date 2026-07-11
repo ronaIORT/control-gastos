@@ -8,7 +8,7 @@ import { showConfirm } from '../utils/confirmDialog.js';
 export function render(container) {
     const { categories, budgets, transactions } = getState();
 
-    const catOptions = categories.map(c => `<option value="${c.name}">${c.emoji} ${c.name}</option>`).join('');
+    const catOptions = categories.filter(c => c.tipo === 'gasto').map(c => `<option value="${c.name}">${c.emoji} ${c.name}</option>`).join('');
 
     const getCategoryDisplay = (catName) => {
         const found = categories.find(c => c.name === catName);

@@ -10,15 +10,18 @@ const STORAGE_KEYS = {
 
 // Categorías precargadas por defecto (no eliminables)
 export const DEFAULT_CATEGORIES = [
-    { name: 'Alimentación', emoji: '🍔', deletable: false },
-    { name: 'Transporte', emoji: '🚗', deletable: false },
-    { name: 'Vivienda', emoji: '🏠', deletable: false },
-    { name: 'Salud', emoji: '💊', deletable: false },
-    { name: 'Educación', emoji: '📚', deletable: false },
-    { name: 'Entretenimiento', emoji: '🎮', deletable: false },
-    { name: 'Tecnología', emoji: '💻', deletable: false },
-    { name: 'Ropa', emoji: '👕', deletable: false },
-    { name: 'Otros', emoji: '📦', deletable: false }
+    { name: 'Alimentación', emoji: '🍔', tipo: 'gasto', deletable: false, editable: false },
+    { name: 'Transporte', emoji: '🚗', tipo: 'gasto', deletable: false, editable: false },
+    { name: 'Vivienda', emoji: '🏠', tipo: 'gasto', deletable: false, editable: false },
+    { name: 'Salud', emoji: '💊', tipo: 'gasto', deletable: false, editable: false },
+    { name: 'Educación', emoji: '📚', tipo: 'gasto', deletable: false, editable: true },
+    { name: 'Entretenimiento', emoji: '🎮', tipo: 'gasto', deletable: false, editable: true },
+    { name: 'Tecnología', emoji: '💻', tipo: 'gasto', deletable: false, editable: true },
+    { name: 'Ropa', emoji: '👕', tipo: 'gasto', deletable: false, editable: true },
+    { name: 'Otros', emoji: '📦', tipo: 'gasto', deletable: false, editable: true },
+    { name: 'Salario', emoji: '💰', tipo: 'ingreso', deletable: false, editable: true },
+    { name: 'Negocio', emoji: '📊', tipo: 'ingreso', deletable: false, editable: true },
+    { name: 'Regalo', emoji: '🎁', tipo: 'ingreso', deletable: false, editable: true }
 ];
 
 // Carga un item de localStorage con manejo de errores
@@ -67,7 +70,14 @@ export function saveGoals(data) {
 
 export function loadCategories() {
     const cats = loadItem(STORAGE_KEYS.categories, null);
-    return cats || [...DEFAULT_CATEGORIES];
+    if (!cats) return DEFAULT_CATEGORIES.map(c => ({ ...c }));
+    // Migración silenciosa: añadir campos faltantes a categorías existentes
+    return cats.map(c => ({
+        ...c,
+        tipo: c.tipo || 'gasto',
+        editable: c.editable !== undefined ? c.editable : true,
+        deletable: c.deletable !== undefined ? c.deletable : true
+    }));
 }
 
 export function saveCategories(data) {
