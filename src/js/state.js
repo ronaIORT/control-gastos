@@ -4,6 +4,7 @@ import {
     loadBudgets, saveBudgets,
     loadGoals, saveGoals,
     loadCategories, saveCategories,
+    saveInitialized, loadInitialized,
     DEFAULT_CATEGORIES
 } from './storage.js';
 
@@ -46,13 +47,14 @@ export function initState() {
     state.goals = loadGoals();
     state.categories = loadCategories();
 
-    // Si no hay datos, generamos datos de ejemplo para demostración
-    if (state.transactions.length === 0 && state.goals.length === 0 && Object.keys(state.budgets).length === 0) {
+    // Si no hay datos ni bandera de inicialización, generamos datos de ejemplo
+    if (state.transactions.length === 0 && state.goals.length === 0 && Object.keys(state.budgets).length === 0 && !loadInitialized()) {
         generateSampleData();
         state.transactions = loadTransactions();
         state.budgets = loadBudgets();
         state.goals = loadGoals();
         state.categories = loadCategories();
+        saveInitialized(true);
     }
     notify();
 }
@@ -201,6 +203,20 @@ export function deleteCategory(name) {
     saveCategories(state.categories);
     notify();
     return true;
+}
+
+// Limpia todos los datos de la aplicación (sin regenerar ejemplos)
+export function clearAllData() {
+    state.transactions = [];
+    state.budgets = {};
+    state.goals = [];
+    state.categories = DEFAULT_CATEGORIES.map(c => ({ ...c }));
+    saveTransactions([]);
+    saveBudgets({});
+    saveGoals([]);
+    saveCategories(state.categories);
+    saveInitialized(true);
+    notify();
 }
 
 // Calcula cuánto ahorrar por mes para alcanzar una meta antes de la fecha límite

@@ -1,4 +1,4 @@
-# AGENTS.md — Control de Gastos
+# AGENTS.md — Control de Gastos — v3.1
 
 ## Stack
 - Vanilla JS (no framework) + Vite 8 + Chart.js 4
@@ -18,13 +18,15 @@ No test, lint, typecheck, or format commands exist.
 - **Entrypoint**: `index.html` -> `/src/js/app.js` (ES module)
 - **SPA routing**: In-memory section switching in `src/js/router.js` (no URL router, no hash)
 - **State**: Custom pub/sub in `src/js/state.js` — `getState()`, `subscribe(fn)`, `notify()` on every mutation
-- **Persistence**: `src/js/storage.js` — localStorage keys prefixed `fp_`: `fp_transactions`, `fp_budgets`, `fp_goals`, `fp_categories`
+- **Persistence**: `src/js/storage.js` — localStorage keys prefixed `fp_`: `fp_transactions`, `fp_budgets`, `fp_goals`, `fp_categories`, `fp_initialized`
 - **Components**: `src/js/components/` — each exports a `render(container)` function
 - **Charts**: `components/charts.js` — wraps Chart.js; `destroyAllCharts()` called before each navigation
-- **Service worker**: `service-worker.js` — precaches only CSS files; cache name `control-gastos-v1`
+- **Service worker**: `service-worker.js` — cache name `control-gastos-v3.1`; precaches index, icon, manifest
 
 ## Key Behaviors
-- On first load (empty localStorage), auto-generates 4 months of sample transactions + budgets + 2 savings goals
+- On first load (empty localStorage, no `fp_initialized` flag), auto-generates 4 months of sample transactions + budgets + 2 savings goals
+- `clearAllData()` in `state.js` empties everything and sets `fp_initialized=true` to prevent re-generation
+- "Borrar todos los datos" button in **Configuración** section uses `showConfirm` + `clearAllData` + redirect to dashboard
 - 9 built-in non-deletable categories defined in `src/js/storage.js`
 - Transaction IDs: `tx_<timestamp>_<random9>` generated in `state.js`
 - Receipt photos stored as base64 in localStorage (compressed via `utils/imageCompressor.js`)

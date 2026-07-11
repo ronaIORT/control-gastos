@@ -1,4 +1,4 @@
-# Control de Gastos
+# Control de Gastos — v3.1
 
 ## 📊 Control de Gastos Personales – Aplicación Web
 
@@ -70,7 +70,7 @@ Ayuda a cualquier persona a **mantener el control de su dinero** de forma sencil
 - **HTML5, CSS3 y JavaScript vanilla** (ES Modules) con **Vite 8**.
 - **Chart.js ^4.4** para gráficos (dependencia npm).
 - **localStorage** para persistencia de datos.
-- **Service Worker** para funcionamiento offline.
+- **Service Worker** (cache `control-gastos-v3.1`) para funcionamiento offline.
 - Arquitectura modular con componentes, routing en memoria y pub/sub para estado.
 
 ## Stack técnico
@@ -83,7 +83,7 @@ Ayuda a cualquier persona a **mantener el control de su dinero** de forma sencil
 | Persistencia  | localStorage (clave `fp_*`)       |
 | Routing       | En memoria (sin URL/hash)         |
 | Estado        | Pub/sub propio                    |
-| Offline       | Service Worker (precache CSS)     |
+| Offline       | Service Worker (`control-gastos-v3.1`) |
 
 ## Desarrollo
 

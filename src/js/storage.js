@@ -5,7 +5,8 @@ const STORAGE_KEYS = {
     transactions: 'fp_transactions',
     budgets: 'fp_budgets',
     goals: 'fp_goals',
-    categories: 'fp_categories'
+    categories: 'fp_categories',
+    initialized: 'fp_initialized'
 };
 
 // Categorías precargadas por defecto (no eliminables)
@@ -82,4 +83,12 @@ export function loadCategories() {
 
 export function saveCategories(data) {
     saveItem(STORAGE_KEYS.categories, data);
+}
+
+export function saveInitialized(val) {
+    saveItem(STORAGE_KEYS.initialized, !!val);
+}
+
+export function loadInitialized() {
+    return loadItem(STORAGE_KEYS.initialized, false);
 }
