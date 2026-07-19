@@ -1,44 +1,51 @@
-# AGENTS.md — Control de Gastos — v3.1
+# AGENTS.md — Control de Gastos — v3.2
 
 ## Stack
-- Vanilla JS (no framework) + Vite 8 + Chart.js 4
-- localStorage persistence (no backend, no API calls)
-- All UI text, comments, and identifiers in **Spanish**
+- JavaScript vanilla (sin framework) + Vite 8 + Chart.js 4
+- Persistencia en localStorage (sin backend, sin API calls)
+- UI, comentarios e identificadores en **español**
 
-## Commands
-| Command | Action |
+## Comandos
+| Comando | Acción |
 |---------|--------|
-| `npm run dev` | Vite dev server (auto-opens browser) |
-| `npm run build` | Production build to `dist/` |
-| `npm run preview` | Preview production build |
+| `npm run dev` | Servidor desarrollo Vite (abre navegador automáticamente) |
+| `npm run build` | Build producción en `dist/` |
+| `npm run preview` | Vista previa build producción |
 
-No test, lint, typecheck, or format commands exist.
+No existen comandos de test, lint, typecheck ni format.
 
-## Architecture
-- **Entrypoint**: `index.html` -> `/src/js/app.js` (ES module)
-- **SPA routing**: In-memory section switching in `src/js/router.js` (no URL router, no hash)
-- **State**: Custom pub/sub in `src/js/state.js` — `getState()`, `subscribe(fn)`, `notify()` on every mutation
-- **Persistence**: `src/js/storage.js` — localStorage keys prefixed `fp_`: `fp_transactions`, `fp_budgets`, `fp_goals`, `fp_categories`, `fp_initialized`
-- **Components**: `src/js/components/` — each exports a `render(container)` function
-- **Charts**: `components/charts.js` — wraps Chart.js; `destroyAllCharts()` called before each navigation
-- **Service worker**: `service-worker.js` — cache name `control-gastos-v3.1`; precaches index, icon, manifest
+## Arquitectura
+- **Entrypoint**: `index.html` -> `src/js/app.js` (ES module)
+- **Enrutamiento SPA**: Cambio de secciones en memoria en `src/js/router.js` (sin URL/hash router)
+- **Estado**: Pub/sub propio en `src/js/state.js` — `getState()`, `subscribe(fn)`, `notify()` en cada mutación
+- **Persistencia**: `src/js/storage.js` — claves localStorage con prefijo `fp_`: `fp_transactions`, `fp_budgets`, `fp_goals`, `fp_categories`, `fp_initialized`
+- **Componentes**: `src/js/components/` — cada uno exporta `render(container)`
+- **Gráficos**: `src/js/components/charts.js` — envoltorio Chart.js; se llama `destroyAllCharts()` antes de cada navegación
+- **Service worker**: `public/service-worker.js` — cache name `control-gastos-v3.2`; precachea index, iconos, manifest
 
-## Key Behaviors
-- On first load (empty localStorage, no `fp_initialized` flag), auto-generates 4 months of sample transactions + budgets + 2 savings goals
-- `clearAllData()` in `state.js` empties everything and sets `fp_initialized=true` to prevent re-generation
-- "Borrar todos los datos" button in **Configuración** section uses `showConfirm` + `clearAllData` + redirect to dashboard
-- 9 built-in non-deletable categories defined in `src/js/storage.js`
-- Transaction IDs: `tx_<timestamp>_<random9>` generated in `state.js`
-- Receipt photos stored as base64 in localStorage (compressed via `utils/imageCompressor.js`)
-- Currency formatting via `utils/format.js` `formatBs()` (Bolivares)
-- Vite config has `server.open: true` — browser opens automatically on `dev`
+## Comportamientos clave
+- Primera carga (sin `fp_initialized`): genera 4 meses de transacciones de ejemplo + presupuestos + 2 metas de ahorro
+- `clearAllData()` en `state.js` vacía todo y establece `fp_initialized=true` para evitar regeneración
+- 12 categorías fijas no eliminables definidas en `src/js/storage.js:13` (9 tipo gasto + 3 tipo ingreso); algunas son editables
+- IDs de transacciones: `tx_<timestamp>_<random9>` generados en `state.js`
+- Fotos de recibos como base64 en localStorage (comprimidas via `utils/imageCompressor.js`)
+- Formateo de moneda via `utils/format.js` `formatBs()` (Bolívares)
+- Vite config `server.open: true` — abre navegador automáticamente al hacer `dev`
+- `vite.config.js` usa `base: '/control-gastos/'` cuando `GH_PAGES=true` (para GitHub Pages deploy)
+- Cada modificación sustancial incrementa el **patch** de la versión (semver). Actualizar los 4 archivos donde aparece: `package.json` → `version`, `package-lock.json` → `version` (root + `packages[""].version`), `public/service-worker.js` → `CACHE` (`control-gastos-v{X.Y.Z}`), `src/js/components/acercade.js` → texto `Versión {X.Y.Z}`
+
+## CI / Deploy
+- Workflow en `.github/workflows/deploy.yml`: `npm ci` + `npm run build` con `GH_PAGES=true` -> upload `dist/` a GitHub Pages
+- Solo se ejecuta en push a `main`
 
 ## PWA
-- `public/manifest.json` references `src/assets/icons/icon-192.png` — **file does not exist** (broken PWA icon)
-- Service worker registers externally (not from app.js); works offline after initial load
+- Iconos en `public/icon-192.png` y `public/icon-512.png` (existen, funcionales)
+- `public/manifest.json` referencia `icon-*.png` (rutas relativas al root)
+- Service worker registrado desde `app.js` (no externamente); funciona offline post-carga inicial
+- `index.html` referencia `icon-192.png` como favicon
 
 ## Gotchas
-- `vite.config.js` is minimal — no plugins, no CSS/postcss config
-- No icon files in `src/assets/icons/` — manifest references broken paths
-- No `.env` files or environment variable usage anywhere
-- Chart.js is an npm dependency (not CDN, despite README saying CDN)
+- `src/assets/icons/` está vacío — no se usa; los iconos reales están en `public/`
+- No hay archivos `.env` ni variables de entorno (excepto `GH_PAGES` en CI)
+- Chart.js es dependencia npm (no CDN, pese a que README diga CDN)
+- Vite config es mínimo — sin plugins CSS/postcss

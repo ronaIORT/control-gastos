@@ -16,9 +16,18 @@ export function getCurrentMonthRange() {
     return getMonthRange(now.getFullYear(), now.getMonth() + 1);
 }
 
+// Obtiene la fecha local actual en formato YYYY-MM-DD (evita el desfase UTC)
+export function getTodayLocal() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
 // Establece la fecha actual como valor por defecto en los campos date de formularios
 export function setDefaultDates() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getTodayLocal();
     const incFecha = document.getElementById('incFecha');
     const expFecha = document.getElementById('expFecha');
     if (incFecha) incFecha.value = today;

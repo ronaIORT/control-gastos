@@ -1,6 +1,12 @@
 import { ICONS } from './icons.js';
 
-export function showConfirm(message) {
+export function showConfirm(message, options = {}) {
+  const {
+    confirmText = 'Eliminar',
+    confirmIcon = ICONS.trash,
+    confirmClass = 'btn-danger'
+  } = options;
+
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
     overlay.className = 'confirm-overlay';
@@ -15,7 +21,7 @@ export function showConfirm(message) {
         <div class="confirm-body">${message}</div>
         <div class="confirm-footer">
           <button class="btn btn-outline confirm-cancel" type="button">Cancelar</button>
-          <button class="btn btn-danger confirm-ok" type="button">${ICONS.trash} Eliminar</button>
+          <button class="btn ${confirmClass} confirm-ok" type="button">${confirmIcon} ${confirmText}</button>
         </div>
       </div>
     `;
