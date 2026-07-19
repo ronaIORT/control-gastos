@@ -1,4 +1,4 @@
-const CACHE = 'control-gastos-v3.5'
+const CACHE = 'control-gastos-v3.6'
 
 const BASE = self.location.pathname.replace(/\/service-worker\.js$/, '')
 

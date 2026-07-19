@@ -2,6 +2,34 @@
     align-items: flex-end;
 }
 
+.cat-emoji-group {
+    max-width: 80px;
+}
+
+.cat-tipo-group {
+    max-width: 160px;
+}
+
+.cat-btn-group {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 768px) {
+    .cat-emoji-group,
+    .cat-tipo-group {
+        max-width: none;
+    }
+
+    .cat-btn-group {
+        flex: 1;
+    }
+
+    .cat-btn-group .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 .cat-item {
     display: flex;
     align-items: center;

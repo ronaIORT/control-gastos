@@ -4,6 +4,7 @@ import { initState, getState, subscribe } from './state.js';
 import { navigateTo, getCurrentSection } from './router.js';
 import { setupGlobalEvents } from './events.js';
 import { ICONS } from './utils/icons.js';
+import { initFab } from './utils/selectionFab.js';
 
 // Inicializar la aplicación cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar datos desde localStorage o generar datos de muestra
     initState();
+
+    // Inicializar FAB de eliminación de transacciones
+    initFab();
 
     // Registrar service worker y detectar actualizaciones
     if ('serviceWorker' in navigator) {

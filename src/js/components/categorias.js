@@ -14,7 +14,7 @@ export function render(container) {
             <h2>${ICONS.categories} Categorías</h2>
             <form id="catForm" autocomplete="off" class="cat-form">
                 <div class="form-row">
-                    <div class="form-group" style="max-width:80px">
+                    <div class="form-group cat-emoji-group">
                         <label>Emoji</label>
                         <input type="text" id="catEmoji" value="😀" maxlength="2" style="text-align:center;font-size:1.3rem">
                     </div>
@@ -22,15 +22,15 @@ export function render(container) {
                         <label>Nombre</label>
                         <input type="text" id="catName" placeholder="Ej: Comida rápida" required>
                     </div>
-                    <div class="form-group" style="max-width:160px">
+                    <div class="form-group cat-tipo-group">
                         <label>Tipo</label>
                         <select id="catTipo" required>
                             <option value="gasto">Gasto</option>
                             <option value="ingreso">Ingreso</option>
                         </select>
                     </div>
-                    <div class="form-group" style="max-width:100px;justify-content:flex-end">
-                        <button type="submit" class="btn btn-primary" style="margin-top:1.35rem">${ICONS.save} Agregar</button>
+                    <div class="form-group cat-btn-group">
+                        <button type="submit" class="btn btn-primary">${ICONS.save} Agregar</button>
                     </div>
                 </div>
             </form>

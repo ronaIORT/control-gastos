@@ -1,4 +1,4 @@
-# AGENTS.md — Control de Gastos — v3.2
+# AGENTS.md — Control de Gastos — v3.6
 
 ## Stack
 - JavaScript vanilla (sin framework) + Vite 8 + Chart.js 4
@@ -21,7 +21,7 @@ No existen comandos de test, lint, typecheck ni format.
 - **Persistencia**: `src/js/storage.js` — claves localStorage con prefijo `fp_`: `fp_transactions`, `fp_budgets`, `fp_goals`, `fp_categories`, `fp_initialized`
 - **Componentes**: `src/js/components/` — cada uno exporta `render(container)`
 - **Gráficos**: `src/js/components/charts.js` — envoltorio Chart.js; se llama `destroyAllCharts()` antes de cada navegación
-- **Service worker**: `public/service-worker.js` — cache name `control-gastos-v3.2`; precachea index, iconos, manifest
+- **Service worker**: `public/service-worker.js` — cache name `control-gastos-v3.6`; precachea index, iconos, manifest
 
 ## Comportamientos clave
 - Primera carga (sin `fp_initialized`): genera 4 meses de transacciones de ejemplo + presupuestos + 2 metas de ahorro

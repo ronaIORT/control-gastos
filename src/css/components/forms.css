@@ -167,6 +167,8 @@
 .history-list {
     display: flex;
     flex-direction: column;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .history-item {
@@ -176,6 +178,7 @@
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--border);
     font-size: 0.85rem;
+    min-width: 580px;
 }
 
 .history-item:last-child {
@@ -196,16 +199,17 @@
 }
 
 .history-desc {
+    min-width: 4rem;
     flex: 1;
     color: var(--text-light);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    min-width: 0;
+    max-width: 7rem;
 }
 
 .history-amount {
-    min-width: 6rem;
+    min-width: 4rem;
     text-align: right;
     font-weight: 600;
     color: var(--red);

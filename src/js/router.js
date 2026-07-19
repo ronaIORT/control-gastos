@@ -12,6 +12,7 @@ import { render as renderAcercade } from './components/acercade.js';
 import { getState } from './state.js';
 import { setDefaultDates } from './utils/dateHelpers.js';
 import { destroyAllCharts } from './components/charts.js';
+import { clearSelection } from './utils/selectionFab.js';
 
 // Mapa de rutas: cada sección tiene su propia función de renderizado
 const routes = {
@@ -37,6 +38,7 @@ export function getCurrentSection() {
 export function navigateTo(section, mainContainer) {
     if (!mainContainer) return;
 
+    clearSelection();
     currentSection = section;
 
     // Activar la sección actual

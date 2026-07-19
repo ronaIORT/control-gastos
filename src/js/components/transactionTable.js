@@ -2,6 +2,7 @@ import { getState } from '../state.js';
 import { formatBs, formatDate, downloadFile } from '../utils/format.js';
 import { ICONS } from '../utils/icons.js';
 import { notify } from '../utils/notification.js';
+import { selectTransaction } from '../utils/selectionFab.js';
 
 let filteredTransactions = [];
 
@@ -83,7 +84,7 @@ export function render(container) {
                 const catDisplay = t.categoria ? getCategoryDisplay(t.categoria) : (t.fuente || '-');
                 const metodoDisplay = t.metodo || t.fuente || '-';
                 tbody.innerHTML += `
-                    <tr>
+                    <tr data-tx-id="${t.id}">
                         <td>${formatDate(t.fecha)}</td>
                         <td>${tipoBadge}</td>
                         <td style="font-weight:600;color:${t.tipo==='ingreso'?'var(--green)':'var(--red)'}">${formatBs(t.monto)}</td>
@@ -129,6 +130,11 @@ export function render(container) {
     document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
     document.getElementById('clearFiltersBtn').addEventListener('click', clearFilters);
     document.getElementById('exportCsvBtn').addEventListener('click', exportCSV);
+
+    document.getElementById('historyTableBody').addEventListener('click', (e) => {
+        const tr = e.target.closest('tr[data-tx-id]');
+        if (tr) selectTransaction(tr.dataset.txId);
+    });
 
     applyFilters();
 }

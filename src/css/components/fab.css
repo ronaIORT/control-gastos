@@ -1,0 +1,63 @@
+.fab-delete {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--red, #ef4444);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4000;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.fab-delete.open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.fab-delete:hover {
+  background: #dc2626;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+}
+
+.fab-delete svg {
+  width: 24px;
+  height: 24px;
+}
+
+tr[data-tx-id],
+.history-item[data-tx-id] {
+  cursor: pointer;
+}
+
+.tx-selected {
+  background: rgba(239, 68, 68, 0.08) !important;
+  outline: 2px solid var(--red, #ef4444);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .fab-delete {
+    bottom: 80px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .fab-delete svg {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -4,6 +4,7 @@ import { processImageToBase64 } from '../utils/imageCompressor.js';
 import { ICONS } from '../utils/icons.js';
 import { notify } from '../utils/notification.js';
 import { formatBs, formatDate } from '../utils/format.js';
+import { selectTransaction } from '../utils/selectionFab.js';
 
 export function render(container) {
     const { categories, transactions } = getState();
@@ -112,6 +113,11 @@ export function render(container) {
             preview.style.display = 'none';
         }
     });
+
+    document.getElementById('incomeHistoryList').addEventListener('click', (e) => {
+        const item = e.target.closest('.history-item[data-tx-id]');
+        if (item) selectTransaction(item.dataset.txId);
+    });
 }
 
 function finalizeIncome(tx) {
@@ -129,7 +135,7 @@ function renderHistoryItems(ingresos, categories) {
         const cat = categories.find(c => c.name === t.fuente);
         const emoji = cat ? cat.emoji : '📦';
         return `
-            <div class="history-item">
+            <div class="history-item" data-tx-id="${t.id}">
                 <span class="history-date">${formatDate(t.fecha)}</span>
                 <span class="history-cat">${emoji} ${t.fuente || '-'}</span>
                 <span class="history-desc">${t.descripcion || '-'}</span>

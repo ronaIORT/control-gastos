@@ -4,6 +4,7 @@ import { processImageToBase64 } from '../utils/imageCompressor.js';
 import { ICONS } from '../utils/icons.js';
 import { notify } from '../utils/notification.js';
 import { formatBs, formatDate } from '../utils/format.js';
+import { selectTransaction } from '../utils/selectionFab.js';
 
 export function render(container) {
     const { categories, transactions } = getState();
@@ -130,6 +131,11 @@ export function render(container) {
             preview.style.display = 'none';
         }
     });
+
+    document.getElementById('expenseHistoryList').addEventListener('click', (e) => {
+        const item = e.target.closest('.history-item[data-tx-id]');
+        if (item) selectTransaction(item.dataset.txId);
+    });
 }
 
 function finalizeExpense(tx) {
@@ -147,7 +153,7 @@ function renderHistoryItems(gastos, categories) {
         const cat = categories.find(c => c.name === t.categoria);
         const emoji = cat ? cat.emoji : '📦';
         return `
-            <div class="history-item">
+            <div class="history-item" data-tx-id="${t.id}">
                 <span class="history-date">${formatDate(t.fecha)}</span>
                 <span class="history-cat">${emoji} ${t.categoria || '-'}</span>
                 <span class="history-desc">${t.descripcion || '-'}</span>
