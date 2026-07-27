@@ -11,10 +11,8 @@ const doughnutCenterText = {
         if (chart.config.type !== 'doughnut') return;
         const dataset = chart.data.datasets[0];
         if (!dataset || !dataset.data) return;
-        const meta = chart.getDatasetMeta(0);
         const total = dataset.data.reduce((a, b, i) => {
-            const el = meta.data[i];
-            return (el && !el.hidden) ? a + Number(b) : a;
+            return chart.getDataVisibility(i) ? a + Number(b) : a;
         }, 0);
         if (total === 0) return;
 
