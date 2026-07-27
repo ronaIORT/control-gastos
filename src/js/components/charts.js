@@ -21,12 +21,9 @@ const doughnutCenterText = {
         ctx.save();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.font = 'bold 22px sans-serif';
+        ctx.font = 'bold 16px sans-serif';
         ctx.fillStyle = '#2d1b4e';
-        ctx.fillText(formatBs(total), centerX, centerY - 8);
-        ctx.font = '12px sans-serif';
-        ctx.fillStyle = '#8b7a9e';
-        ctx.fillText('Total', centerX, centerY + 18);
+        ctx.fillText(total.toLocaleString('es-BO'), centerX, centerY);
         ctx.restore();
     }
 };
