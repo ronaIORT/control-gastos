@@ -54,12 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Registrar service worker y detectar actualizaciones
     if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data?.type === 'VERSION') {
+                console.log('[App] SW versión:', event.data.version);
+            }
+        });
+
         navigator.serviceWorker.register('service-worker.js').then(reg => {
             reg.addEventListener('updatefound', () => {
                 const nuevoSW = reg.installing;
                 nuevoSW.addEventListener('statechange', () => {
                     if (nuevoSW.state === 'installed' && navigator.serviceWorker.controller) {
-                        mostrarActualizacionDisponible();
+                        mostrarActualizacionDisponible(reg);
                     }
                 });
             });
@@ -83,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function mostrarActualizacionDisponible() {
+function mostrarActualizacionDisponible(reg) {
     const existing = document.querySelector('.update-banner');
     if (existing) return;
 
@@ -98,7 +104,12 @@ function mostrarActualizacionDisponible() {
     `;
 
     banner.querySelector('.reload-btn').addEventListener('click', () => {
-        location.reload();
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            window.location.reload();
+        });
+        if (reg.waiting) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
     });
 
     banner.querySelector('.close-btn').addEventListener('click', () => {

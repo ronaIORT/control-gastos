@@ -9,7 +9,7 @@
 | Comando | Acción |
 |---------|--------|
 | `npm run dev` | Servidor desarrollo Vite (abre navegador automáticamente) |
-| `npm run build` | Build producción en `dist/` |
+| `npm run build` | Build producción en `dist/` + genera `dist/service-worker.js` via `scripts/generate-sw.cjs` |
 | `npm run preview` | Vista previa build producción |
 
 No existen comandos de test, lint, typecheck ni format.
@@ -21,7 +21,8 @@ No existen comandos de test, lint, typecheck ni format.
 - **Persistencia**: `src/js/storage.js` — claves localStorage con prefijo `fp_`: `fp_transactions`, `fp_budgets`, `fp_goals`, `fp_categories`, `fp_initialized`
 - **Componentes**: `src/js/components/` — cada uno exporta `render(container)`
 - **Gráficos**: `src/js/components/charts.js` — envoltorio Chart.js; se llama `destroyAllCharts()` antes de cada navegación
-- **Service worker**: `public/service-worker.js` — cache name `control-gastos-v3.6`; precachea index, iconos, manifest
+- **Service worker**: Generado post-build en `dist/service-worker.js` via `scripts/generate-sw.cjs`. Incluye precache de todos los assets del build con `Promise.allSettled()`, limpieza de caches por prefijo (`control-gastos-v*`), `clients.claim()`, fallback SPA offline (`index.html`), respuestas degradadas vacías para scripts/styles fuera de línea, canal de mensajes (`SKIP_WAITING`, `VERSION`). Cache name auto-generado desde `package.json` (`control-gastos-v{version}`).
+- **Scripts auxiliares**: `scripts/generate-sw.cjs` lee `package.json` para la versión y escanea `dist/` para armar el precache. Se ejecuta automáticamente en el build.
 
 ## Comportamientos clave
 - Primera carga (sin `fp_initialized`): genera 4 meses de transacciones de ejemplo + presupuestos + 2 metas de ahorro
@@ -32,7 +33,7 @@ No existen comandos de test, lint, typecheck ni format.
 - Formateo de moneda via `utils/format.js` `formatBs()` (Bolívares)
 - Vite config `server.open: true` — abre navegador automáticamente al hacer `dev`
 - `vite.config.js` usa `base: '/control-gastos/'` cuando `GH_PAGES=true` (para GitHub Pages deploy)
-- Cada modificación sustancial incrementa el **patch** de la versión (semver). Actualizar los 4 archivos donde aparece: `package.json` → `version`, `package-lock.json` → `version` (root + `packages[""].version`), `public/service-worker.js` → `CACHE` (`control-gastos-v{X.Y.Z}`), `src/js/components/acercade.js` → texto `Versión {X.Y.Z}`
+- Cada modificación sustancial incrementa el **patch** de la versión (semver). Actualizar los 3 archivos donde aparece: `package.json` → `version`, `package-lock.json` → `version` (root + `packages[""].version`), `src/js/components/acercade.js` → texto `Versión {X.Y.Z}`. El cache name del service worker se genera automáticamente desde `package.json` durante el build.
 
 ## CI / Deploy
 - Workflow en `.github/workflows/deploy.yml`: `npm ci` + `npm run build` con `GH_PAGES=true` -> upload `dist/` a GitHub Pages

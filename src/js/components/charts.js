@@ -3,6 +3,34 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 import { getState } from '../state.js';
+import { formatBs } from '../utils/format.js';
+
+const doughnutCenterText = {
+    id: 'doughnutCenterText',
+    afterDraw(chart) {
+        if (chart.config.type !== 'doughnut') return;
+        const dataset = chart.data.datasets[0];
+        if (!dataset || !dataset.data) return;
+        const total = dataset.data.reduce((a, b) => a + Number(b), 0);
+        if (total === 0) return;
+
+        const { ctx, chartArea } = chart;
+        const centerX = (chartArea.left + chartArea.right) / 2;
+        const centerY = (chartArea.top + chartArea.bottom) / 2;
+
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillStyle = '#2d1b4e';
+        ctx.fillText(formatBs(total), centerX, centerY - 8);
+        ctx.font = '12px sans-serif';
+        ctx.fillStyle = '#8b7a9e';
+        ctx.fillText('Total', centerX, centerY + 18);
+        ctx.restore();
+    }
+};
+Chart.register(doughnutCenterText);
 import { ICONS } from '../utils/icons.js';
 
 // Registro de instancias activas para poder destruirlas al cambiar de sección
@@ -49,6 +77,7 @@ export function renderDoughnutChart(canvasId, gastosPorCat) {
         },
         options: {
             responsive: true,
+            cutout: '65%',
             plugins: { legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true, pointStyleWidth: 10 } } }
         }
     });

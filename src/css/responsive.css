@@ -149,6 +149,6 @@
     }
 
     .chart-card canvas {
-        max-height: 200px;
+        max-height: 260px;
     }
 }
