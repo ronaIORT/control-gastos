@@ -25,6 +25,16 @@ export function getTodayLocal() {
     return `${yyyy}-${mm}-${dd}`;
 }
 
+// Obtiene la fecha local de hace N días en formato YYYY-MM-DD (evita el desfase UTC)
+export function getLocalDateDaysAgo(days) {
+    const d = new Date();
+    d.setDate(d.getDate() - days);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
 // Establece la fecha actual como valor por defecto en los campos date de formularios
 export function setDefaultDates() {
     const today = getTodayLocal();

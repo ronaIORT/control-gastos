@@ -163,67 +163,7 @@
     background: #16a543;
 }
 
-/* ===== Historial de gastos ===== */
-.history-list {
-    display: flex;
-    flex-direction: column;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.history-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.85rem;
-    min-width: 580px;
-}
-
-.history-item:last-child {
-    border-bottom: none;
-}
-
-.history-date {
-    color: var(--text-light);
-    min-width: 5rem;
-    font-size: 0.8rem;
-    flex-shrink: 0;
-}
-
-.history-cat {
-    min-width: 7rem;
-    font-weight: 500;
-    flex-shrink: 0;
-}
-
-.history-desc {
-    min-width: 4rem;
-    flex: 1;
-    color: var(--text-light);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 7rem;
-}
-
-.history-amount {
-    min-width: 4rem;
-    text-align: right;
-    font-weight: 600;
-    color: var(--red);
-    flex-shrink: 0;
-}
-
-.history-method {
-    min-width: 4.5rem;
-    text-align: right;
-    font-size: 0.8rem;
-    color: var(--text-light);
-    flex-shrink: 0;
-}
-
+/* ===== Total del historial ===== */
 .history-total {
     display: flex;
     justify-content: flex-end;
@@ -236,9 +176,124 @@
     color: var(--red);
 }
 
+/* Varios totales agrupados (historial de gastos) */
+.history-totals {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 0.75rem;
+    border-top: 2px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+.history-totals .history-total {
+    padding-top: 0;
+    border-top: none;
+    margin-top: 0;
+}
+
+.history-total-secondary {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
 .history-empty {
     padding: 1rem 0;
     text-align: center;
     color: var(--text-light);
     font-size: 0.9rem;
+}
+
+/* ===== Historial de gastos e ingresos en tarjetas ===== */
+.expense-history,
+.income-history {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.expense-card,
+.income-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.expense-card:hover,
+.income-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.expense-card-icon,
+.income-card-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.2rem;
+    line-height: 1;
+    background: #f5f0fa;
+    border-radius: 50%;
+}
+
+.expense-card-body,
+.income-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.expense-card-desc,
+.income-card-desc {
+    font-weight: 600;
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.expense-card-meta,
+.income-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.expense-card-cat,
+.income-card-cat {
+    font-weight: 500;
+}
+
+.expense-card-meta .dot,
+.income-card-meta .dot {
+    opacity: 0.6;
+}
+
+.expense-card-amount,
+.income-card-amount {
+    flex-shrink: 0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.expense-card-amount {
+    color: var(--red);
+}
+
+.income-card-amount {
+    color: var(--green);
 }

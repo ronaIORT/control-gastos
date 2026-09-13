@@ -45,7 +45,7 @@ export function render(container) {
         </div>
         <div class="form-card">
             <h2>${ICONS.history} Últimos Ingresos</h2>
-            <div id="incomeHistoryList" class="history-list">
+            <div id="incomeHistoryList" class="income-history">
                 ${renderHistoryItems(ultimosIngresos, categories)}
             </div>
             <div class="history-total">Total general: ${formatBs(totalIngresos)}</div>
@@ -115,7 +115,7 @@ export function render(container) {
     });
 
     document.getElementById('incomeHistoryList').addEventListener('click', (e) => {
-        const item = e.target.closest('.history-item[data-tx-id]');
+        const item = e.target.closest('.income-card[data-tx-id]');
         if (item) selectTransaction(item.dataset.txId);
     });
 }
@@ -135,11 +135,17 @@ function renderHistoryItems(ingresos, categories) {
         const cat = categories.find(c => c.name === t.fuente);
         const emoji = cat ? cat.emoji : '📦';
         return `
-            <div class="history-item" data-tx-id="${t.id}">
-                <span class="history-date">${formatDate(t.fecha)}</span>
-                <span class="history-cat">${emoji} ${t.fuente || '-'}</span>
-                <span class="history-desc">${t.descripcion || '-'}</span>
-                <span class="history-amount">${formatBs(t.monto)}</span>
+            <div class="income-card" data-tx-id="${t.id}">
+                <div class="income-card-icon">${emoji}</div>
+                <div class="income-card-body">
+                    <div class="income-card-desc">${t.descripcion || '-'}</div>
+                    <div class="income-card-meta">
+                        <span class="income-card-cat">${t.fuente || '-'}</span>
+                        <span class="dot">·</span>
+                        <span>${formatDate(t.fecha)}</span>
+                    </div>
+                </div>
+                <div class="income-card-amount">${formatBs(t.monto)}</div>
             </div>
         `;
     }).join('');

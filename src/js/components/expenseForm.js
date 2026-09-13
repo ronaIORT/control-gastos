@@ -1,5 +1,5 @@
 import { getState, addTransaction } from '../state.js';
-import { setDefaultDates, getTodayLocal } from '../utils/dateHelpers.js';
+import { setDefaultDates, getTodayLocal, getLocalDateDaysAgo } from '../utils/dateHelpers.js';
 import { processImageToBase64 } from '../utils/imageCompressor.js';
 import { ICONS } from '../utils/icons.js';
 import { notify } from '../utils/notification.js';
@@ -9,9 +9,9 @@ import { selectTransaction } from '../utils/selectionFab.js';
 export function render(container) {
     const { categories, transactions } = getState();
     const gastoCats = categories.filter(c => c.tipo === 'gasto');
-    const gastos = transactions.filter(t => t.tipo === 'gasto');
-    const totalGastos = gastos.reduce((sum, t) => sum + t.monto, 0);
-    const ultimosGastos = gastos.slice(0, 10);
+    const ultimosGastos = gastosUltimos7Dias(transactions);
+    const totalGastos7 = ultimosGastos.reduce((sum, t) => sum + t.monto, 0);
+    const totalGastos = transactions.filter(t => t.tipo === 'gasto').reduce((sum, t) => sum + t.monto, 0);
     let categoriaSeleccionada = gastoCats.length > 0 ? gastoCats[0].name : '';
     let metodoSeleccionado = 'Efectivo';
 
@@ -52,11 +52,14 @@ export function render(container) {
             </form>
         </div>
         <div class="form-card">
-            <h2>${ICONS.history} Últimos Gastos</h2>
-            <div id="expenseHistoryList" class="history-list">
+            <h2>${ICONS.history} Gastos · últimos 7 días</h2>
+            <div id="expenseHistoryList" class="expense-history">
                 ${renderHistoryItems(ultimosGastos, categories)}
             </div>
-            <div class="history-total">Total general: ${formatBs(totalGastos)}</div>
+            <div class="history-totals">
+                <div class="history-total history-total-secondary" id="expenseTotal7">Total últimos 7 días: ${formatBs(totalGastos7)}</div>
+                <div class="history-total" id="expenseTotalAll">Total general: ${formatBs(totalGastos)}</div>
+            </div>
         </div>
     `;
 
@@ -133,7 +136,7 @@ export function render(container) {
     });
 
     document.getElementById('expenseHistoryList').addEventListener('click', (e) => {
-        const item = e.target.closest('.history-item[data-tx-id]');
+        const item = e.target.closest('.expense-card[data-tx-id]');
         if (item) selectTransaction(item.dataset.txId);
     });
 }
@@ -147,18 +150,31 @@ function finalizeExpense(tx) {
     notify('Gasto registrado correctamente.', 'success');
 }
 
+function gastosUltimos7Dias(transactions) {
+    const hoy = getTodayLocal();
+    const corte = getLocalDateDaysAgo(6);
+    return transactions.filter(t => t.tipo === 'gasto' && t.fecha >= corte && t.fecha <= hoy);
+}
+
 function renderHistoryItems(gastos, categories) {
-    if (!gastos.length) return '<div class="history-empty">No hay gastos registrados.</div>';
+    if (!gastos.length) return '<div class="history-empty">No hay gastos en los últimos 7 días.</div>';
     return gastos.map(t => {
         const cat = categories.find(c => c.name === t.categoria);
         const emoji = cat ? cat.emoji : '📦';
         return `
-            <div class="history-item" data-tx-id="${t.id}">
-                <span class="history-date">${formatDate(t.fecha)}</span>
-                <span class="history-cat">${emoji} ${t.categoria || '-'}</span>
-                <span class="history-desc">${t.descripcion || '-'}</span>
-                <span class="history-amount">${formatBs(t.monto)}</span>
-                <span class="history-method">${t.metodo || '-'}</span>
+            <div class="expense-card" data-tx-id="${t.id}">
+                <div class="expense-card-icon">${emoji}</div>
+                <div class="expense-card-body">
+                    <div class="expense-card-desc">${t.descripcion || '-'}</div>
+                    <div class="expense-card-meta">
+                        <span class="expense-card-cat">${t.categoria || '-'}</span>
+                        <span class="dot">·</span>
+                        <span>${formatDate(t.fecha)}</span>
+                        <span class="dot">·</span>
+                        <span>${t.metodo || '-'}</span>
+                    </div>
+                </div>
+                <div class="expense-card-amount">${formatBs(t.monto)}</div>
             </div>
         `;
     }).join('');
@@ -166,10 +182,13 @@ function renderHistoryItems(gastos, categories) {
 
 function refreshHistory() {
     const { transactions, categories } = getState();
-    const gastos = transactions.filter(t => t.tipo === 'gasto');
-    const total = gastos.reduce((sum, t) => sum + t.monto, 0);
+    const gastos = gastosUltimos7Dias(transactions);
+    const total7 = gastos.reduce((sum, t) => sum + t.monto, 0);
+    const total = transactions.filter(t => t.tipo === 'gasto').reduce((sum, t) => sum + t.monto, 0);
     const list = document.getElementById('expenseHistoryList');
-    if (list) list.innerHTML = renderHistoryItems(gastos.slice(0, 10), categories);
-    const totalEl = document.querySelector('.history-total');
+    if (list) list.innerHTML = renderHistoryItems(gastos, categories);
+    const total7El = document.getElementById('expenseTotal7');
+    if (total7El) total7El.textContent = 'Total últimos 7 días: ' + formatBs(total7);
+    const totalEl = document.getElementById('expenseTotalAll');
     if (totalEl) totalEl.textContent = 'Total general: ' + formatBs(total);
 }

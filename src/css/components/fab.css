@@ -36,8 +36,7 @@
   height: 24px;
 }
 
-tr[data-tx-id],
-.history-item[data-tx-id] {
+tr[data-tx-id] {
   cursor: pointer;
 }
 
